@@ -34,12 +34,9 @@
             使用 UnoCSS 构建的现代化组件库，专注于简约设计和优秀的用户体验
           </p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <button class="px-8 py-3 bg-slate-900 text-white rounded-lg font-medium hover:bg-slate-800 transition-colors shadow-lg">
+            <a href="#components" class="px-8 py-3 bg-slate-900 text-white rounded-lg font-medium hover:bg-slate-800 transition-colors shadow-lg">
               开始使用
-            </button>
-            <button class="px-8 py-3 border border-slate-300 text-slate-700 rounded-lg font-medium hover:bg-slate-50 transition-colors">
-              查看文档
-            </button>
+            </a>
           </div>
         </div>
       </div>
