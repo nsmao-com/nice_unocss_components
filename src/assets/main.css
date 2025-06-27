@@ -1,0 +1,21 @@
+@import './base.css';
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border-style: solid;
+  border-width: 0px;
+}
+
+body{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a{
+  text-decoration: none;
+  color: inherit;
+}
+
