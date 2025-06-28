@@ -61,7 +61,7 @@ const props = defineProps({
   variant: {
     type: String,
     default: 'primary',
-    validator: (value) => ['primary', 'secondary', 'outline', 'ghost', 'danger', 'success'].includes(value),
+    validator: (value) => ['primary', 'secondary', 'outline', 'ghost', 'danger', 'success', 'warning'].includes(value),
   },
   // 按钮尺寸
   size: {
@@ -153,6 +153,11 @@ const buttonClass = computed(() => {
       'hover:bg-green-700 hover:border-green-700',
       'disabled:bg-green-300 disabled:border-green-300',
     ],
+    warning: [
+      'bg-yellow-600 text-white border border-yellow-600',
+      'hover:bg-yellow-700 hover:border-yellow-700',
+      'disabled:bg-yellow-300 disabled:border-yellow-300',
+    ],
   };
 
   // 圆角样式 - 纯图标按钮自动为圆形
@@ -166,8 +171,8 @@ const buttonClass = computed(() => {
 
   return [
     ...baseClasses,
-    sizeClasses[props.size],
-    ...variantClasses[props.variant],
+    sizeClasses[props.size] || sizeClasses.md,
+    ...(variantClasses[props.variant] || variantClasses.primary),
     roundedClasses,
     widthClasses,
     disabledClasses,

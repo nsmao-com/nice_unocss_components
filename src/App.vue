@@ -87,6 +87,8 @@
         </div>
 
         <div class="masonry-container">
+
+
           <!-- Pagination Component -->
           <div class="masonry-item bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
             <div class="p-6 border-b border-slate-100">
@@ -229,6 +231,80 @@
                       :totalPages="8"
                       :compact="true"
                       :rounded="true"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Leaderboard Component -->
+          <div class="masonry-item bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <div class="p-6 border-b border-slate-100">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                  <div class="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center">
+                    <svg class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 class="text-lg font-semibold text-slate-900">Leaderboard</h3>
+                    <p class="text-sm text-slate-500">排行榜组件</p>
+                  </div>
+                </div>
+                <div class="flex space-x-2">
+                  <button 
+                    @click.stop="openParameterModal('Leaderboard')"
+                    class="w-8 h-8 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center"
+                    title="查看参数说明"
+                  >
+                    <Info :size="16" />
+                  </button>
+                  <button 
+                    @click.stop="openLeaderboardModal"
+                    class="w-8 h-8 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors flex items-center justify-center"
+                    title="查看代码"
+                  >
+                    <Code2 :size="16" />
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            <div class="p-6 space-y-6">
+              <!-- 基础排行榜 -->
+              <div>
+                <h4 class="text-sm font-medium text-slate-700 mb-3">基础排行榜</h4>
+                <Leaderboard 
+                  title="用户积分排行"
+                  :items="leaderboardItems"
+                  scoreUnit="积分"
+                  :showRefresh="true"
+                  @refresh="handleLeaderboardRefresh"
+                />
+              </div>
+              
+              <!-- 不同样式 -->
+              <div>
+                <h4 class="text-sm font-medium text-slate-700 mb-3">不同样式</h4>
+                <div class="space-y-4">
+                  <div>
+                    <span class="text-xs text-slate-500 mb-2 block">紧凑样式:</span>
+                    <Leaderboard 
+                      :items="leaderboardItems.slice(0, 3)"
+                      variant="compact"
+                      size="sm"
+                    />
+                  </div>
+                  <div>
+                    <span class="text-xs text-slate-500 mb-2 block">卡片样式:</span>
+                    <Leaderboard 
+                      :items="leaderboardItems.slice(0, 3)"
+                      variant="card"
+                      :showOnlineStatus="true"
+                      :showActions="true"
+                      @viewProfile="handleViewProfile"
                     />
                   </div>
                 </div>
@@ -493,6 +569,209 @@
               
               <div class="mt-4 text-xs text-slate-500 text-center">
                 点击任意按钮查看涟漪动画效果
+              </div>
+            </div>
+          </div>
+
+          <!-- Popover Component -->
+          <div class="masonry-item bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <div class="p-6 border-b border-slate-100">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                  <div class="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center">
+                    <MessageSquare :size="20" class="text-slate-600" />
+                  </div>
+                  <div>
+                    <h3 class="text-lg font-semibold text-slate-900">Popover</h3>
+                    <p class="text-sm text-slate-500">智能定位的弹出提示组件</p>
+                  </div>
+                </div>
+                <div class="flex space-x-2">
+                  <button 
+                    @click.stop="openParameterModal('Popover')"
+                    class="w-8 h-8 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center"
+                    title="查看参数说明"
+                  >
+                    <Info :size="16" />
+                  </button>
+                  <button 
+                    @click.stop="openPopoverModal"
+                    class="w-8 h-8 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors flex items-center justify-center"
+                    title="查看代码"
+                  >
+                    <Code2 :size="16" />
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            <div class="p-6 space-y-6">
+              <!-- 基础 Popover -->
+              <div>
+                <h4 class="text-sm font-medium text-slate-700 mb-3">基础用法</h4>
+                <div class="flex flex-wrap gap-3">
+                  <popover 
+                    title="Popover Content"
+                    content="This is the popover content"
+                    trigger-text="Open Popover"
+                  />
+                  <popover 
+                    content="Simple popover without title"
+                    trigger-text="No Title"
+                  />
+                </div>
+              </div>
+
+                             <!-- 不同触发方式 -->
+               <div>
+                 <h4 class="text-sm font-medium text-slate-700 mb-3">触发方式</h4>
+                 <div class="flex flex-wrap gap-3">
+                   <popover 
+                     title="Click Trigger"
+                     content="Click the button to show/hide"
+                     trigger="click"
+                     trigger-text="Click"
+                   />
+                   <popover 
+                     title="Hover Trigger"
+                     content="Hover the button to show"
+                     trigger="hover"
+                     trigger-text="Hover"
+                   />
+                 </div>
+               </div>
+
+              <!-- 不同位置 -->
+              <div>
+                <h4 class="text-sm font-medium text-slate-700 mb-3">弹出位置</h4>
+                <div class="grid grid-cols-3 gap-4 place-items-center">
+                  <popover placement="top-start" content="Top Start" trigger-text="↖" />
+                  <popover placement="top" content="Top Center" trigger-text="↑" />
+                  <popover placement="top-end" content="Top End" trigger-text="↗" />
+                  
+                  <popover placement="left" content="Left Center" trigger-text="←" />
+                  <div class="text-xs text-slate-500">Center</div>
+                  <popover placement="right" content="Right Center" trigger-text="→" />
+                  
+                  <popover placement="bottom-start" content="Bottom Start" trigger-text="↙" />
+                  <popover placement="bottom" content="Bottom Center" trigger-text="↓" />
+                  <popover placement="bottom-end" content="Bottom End" trigger-text="↘" />
+                </div>
+              </div>
+
+              <!-- 不同样式变体 -->
+              <div>
+                <h4 class="text-sm font-medium text-slate-700 mb-3">样式变体</h4>
+                <div class="flex flex-wrap gap-3">
+                  <popover 
+                    title="Default Style"
+                    content="Default popover style"
+                    variant="default"
+                    trigger-text="Default"
+                  />
+                  <popover 
+                    title="Dark Style"
+                    content="Dark theme popover"
+                    variant="dark"
+                    trigger-text="Dark"
+                  />
+                  <popover 
+                    title="Primary Style"
+                    content="Primary color popover"
+                    variant="primary"
+                    trigger-text="Primary"
+                  />
+                  <popover 
+                    title="Light Style"
+                    content="Light theme with shadow"
+                    variant="light"
+                    trigger-text="Light"
+                  />
+                </div>
+              </div>
+
+              <!-- 不同尺寸 -->
+              <div>
+                <h4 class="text-sm font-medium text-slate-700 mb-3">不同尺寸</h4>
+                <div class="flex flex-wrap gap-3">
+                  <popover 
+                    title="Small Size"
+                    content="Small popover"
+                    size="sm"
+                    trigger-text="Small"
+                  />
+                  <popover 
+                    title="Medium Size"
+                    content="Medium popover content"
+                    size="md"
+                    trigger-text="Medium"
+                  />
+                  <popover 
+                    title="Large Size"
+                    content="Large popover with more content space"
+                    size="lg"
+                    trigger-text="Large"
+                  />
+                </div>
+              </div>
+
+              <!-- 功能选项 -->
+              <div>
+                <h4 class="text-sm font-medium text-slate-700 mb-3">功能选项</h4>
+                <div class="flex flex-wrap gap-3">
+                  <popover 
+                    title="Closable Popover"
+                    content="This popover has a close button"
+                    :closable="true"
+                    trigger-text="Closable"
+                  />
+                  <popover 
+                    title="No Arrow"
+                    content="Popover without arrow"
+                    :show-arrow="false"
+                    trigger-text="No Arrow"
+                  />
+                  <popover 
+                    title="Custom Width"
+                    content="This popover has a custom width setting"
+                    :width="300"
+                    trigger-text="Custom Width"
+                  />
+                </div>
+              </div>
+
+              <!-- 自定义内容 -->
+              <div>
+                <h4 class="text-sm font-medium text-slate-700 mb-3">自定义内容</h4>
+                <popover trigger-text="Rich Content">
+                  <template #title>
+                    <div class="flex items-center space-x-2">
+                      <User :size="16" />
+                      <span>User Profile</span>
+                    </div>
+                  </template>
+                  <template #content>
+                    <div class="space-y-3">
+                      <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-medium">
+                          JD
+                        </div>
+                        <div>
+                          <div class="font-medium text-sm">John Doe</div>
+                          <div class="text-xs text-slate-500">Software Engineer</div>
+                        </div>
+                      </div>
+                      <div class="flex space-x-2">
+                        <button class="px-2 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600 transition-colors">
+                          View Profile
+                        </button>
+                        <button class="px-2 py-1 bg-slate-100 text-slate-700 text-xs rounded hover:bg-slate-200 transition-colors">
+                          Message
+                        </button>
+                      </div>
+                    </div>
+                  </template>
+                </popover>
               </div>
             </div>
           </div>
@@ -1555,6 +1834,103 @@
             </div>
           </div>
 
+          <!-- Toast Component -->
+          <div class="masonry-item bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <div class="p-6 border-b border-slate-100">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                  <div class="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center">
+                    <Bell :size="20" class="text-slate-600" />
+                  </div>
+                  <div>
+                    <h3 class="text-lg font-semibold text-slate-900">Toast</h3>
+                    <p class="text-sm text-slate-500">轻量级的通知提示组件</p>
+                  </div>
+                </div>
+                <div class="flex space-x-2">
+                  <button 
+                    @click.stop="openParameterModal('Toast')"
+                    class="w-8 h-8 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center"
+                    title="查看参数说明"
+                  >
+                    <Info :size="16" />
+                  </button>
+                  <button 
+                    @click.stop="openToastModal"
+                    class="w-8 h-8 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors flex items-center justify-center"
+                    title="查看代码"
+                  >
+                    <Code2 :size="16" />
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            <div class="p-6">
+              <div class="space-y-6">
+                <!-- 不同位置 -->
+                <div>
+                  <h4 class="text-sm font-medium text-slate-700 mb-3">不同位置</h4>
+                  <div class="grid grid-cols-2 gap-3">
+                    <ripple-button text="左上角" variant="outline" size="sm" @click="showToast('top-left', 'success', '左上角通知', '这是一个显示在左上角的成功通知')" />
+                    <ripple-button text="右上角" variant="outline" size="sm" @click="() => { console.log('Button clicked!'); showToast('top-right', 'info', '右上角通知', '这是一个显示在右上角的信息通知'); }" />
+                    <ripple-button text="左下角" variant="outline" size="sm" @click="showToast('bottom-left', 'warning', '左下角通知', '这是一个显示在左下角的警告通知')" />
+                    <ripple-button text="右下角" variant="outline" size="sm" @click="showToast('bottom-right', 'error', '右下角通知', '这是一个显示在右下角的错误通知')" />
+                  </div>
+
+
+                </div>
+
+                <!-- 不同类型 -->
+                <div>
+                  <h4 class="text-sm font-medium text-slate-700 mb-3">不同类型</h4>
+                  <div class="flex flex-wrap gap-3">
+                    <ripple-button text="成功" variant="success" size="sm" @click="showToast('top-right', 'success', '操作成功', '您的操作已成功完成！')" />
+                    <ripple-button text="信息" variant="primary" size="sm" @click="showToast('top-right', 'info', '系统消息', '这是一条重要的系统消息')" />
+                    <ripple-button text="警告" variant="warning" size="sm" @click="showToast('top-right', 'warning', '注意事项', '请注意这个重要的警告信息')" />
+                    <ripple-button text="错误" variant="danger" size="sm" @click="showToast('top-right', 'error', '操作失败', '抱歉，操作执行失败，请重试')" />
+                    <ripple-button text="默认" variant="ghost" size="sm" @click="showToast('top-right', 'default', '默认通知', '这是一个默认样式的通知')" />
+                  </div>
+                </div>
+
+                <!-- 不同功能 -->
+                <div>
+                  <h4 class="text-sm font-medium text-slate-700 mb-3">功能选项</h4>
+                  <div class="flex flex-wrap gap-3">
+                    <ripple-button text="持久显示" variant="secondary" size="sm" @click="showToast('top-right', 'info', '持久通知', '这个通知不会自动消失', 0)" />
+                    <ripple-button text="点击关闭" variant="outline" size="sm" @click="showToast('top-right', 'success', '点击关闭', '点击通知可以关闭它', 8000, true)" />
+                    <ripple-button text="无进度条" variant="ghost" size="sm" @click="showToast('top-right', 'warning', '无进度条', '这个通知没有进度条', 4000, false, false)" />
+                    <ripple-button text="长时间显示" variant="primary" size="sm" @click="showToast('top-right', 'info', '长时间显示', '这个通知会显示10秒钟', 10000)" />
+                  </div>
+                </div>
+
+                <!-- 不同尺寸 -->
+                <div>
+                  <h4 class="text-sm font-medium text-slate-700 mb-3">不同尺寸</h4>
+                  <div class="flex flex-wrap gap-3">
+                    <ripple-button text="小尺寸" variant="outline" size="sm" @click="showToastWithSize('top-right', 'info', '小尺寸', '这是小尺寸的通知', 'sm')" />
+                    <ripple-button text="中等尺寸" variant="outline" size="sm" @click="showToastWithSize('top-right', 'info', '中等尺寸', '这是中等尺寸的通知', 'md')" />
+                    <ripple-button text="大尺寸" variant="outline" size="sm" @click="showToastWithSize('top-right', 'info', '大尺寸', '这是大尺寸的通知，可以显示更多内容', 'lg')" />
+                  </div>
+                </div>
+
+                <!-- 动画效果 -->
+                <div>
+                  <h4 class="text-sm font-medium text-slate-700 mb-3">动画效果</h4>
+                  <div class="flex flex-wrap gap-3">
+                    <ripple-button text="滑动" variant="primary" size="sm" @click="showToastWithAnimation('top-right', 'success', '滑动动画', '从右侧滑入的动画效果', 'slide')" />
+                    <ripple-button text="淡入" variant="secondary" size="sm" @click="showToastWithAnimation('top-right', 'info', '淡入动画', '淡入淡出的动画效果', 'fade')" />
+                    <ripple-button text="弹跳" variant="success" size="sm" @click="showToastWithAnimation('top-right', 'warning', '弹跳动画', '弹跳式的动画效果', 'bounce')" />
+                  </div>
+                </div>
+              </div>
+              
+              <div class="mt-6 text-xs text-slate-500 text-center">
+                支持四个角落定位、多种类型、自动消失、进度条显示和多种动画效果
+              </div>
+            </div>
+          </div>
+
           <!-- Drawer Component -->
           <div class="masonry-item bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
             <div class="p-6 border-b border-slate-100">
@@ -1671,7 +2047,7 @@
     <!-- Demo Modals -->
     <Modal
       v-model:visible="modalStates.demo"
-      :title="`${demoModalSize.toUpperCase()} 尺寸弹窗`"
+      :title="demoModalSize.toUpperCase() + ' 尺寸弹窗'"
       :size="demoModalSize"
       @confirm="handleModalConfirm"
     >
@@ -1922,6 +2298,75 @@
         </div>
       </div>
     </Drawer>
+
+    <!-- Toast 组件实例 - 支持队列堆叠 -->
+    <Toast
+      v-for="(toast, index) in toastQueues.topLeft"
+      :key="toast.id"
+      v-model:visible="toast.visible"
+      position="top-left"
+      :offset="getToastOffset('top-left', index)"
+      :variant="toast.variant"
+      :title="toast.title"
+      :message="toast.message"
+      :duration="toast.duration"
+      :clickToClose="toast.clickToClose"
+      :showProgress="toast.showProgress"
+      :size="toast.size"
+      :animation="toast.animation"
+      @close="handleToastClose('top-left', toast.id)"
+    />
+
+    <Toast
+      v-for="(toast, index) in toastQueues.topRight"
+      :key="toast.id"
+      v-model:visible="toast.visible"
+      position="top-right"
+      :offset="getToastOffset('top-right', index)"
+      :variant="toast.variant"
+      :title="toast.title"
+      :message="toast.message"
+      :duration="toast.duration"
+      :clickToClose="toast.clickToClose"
+      :showProgress="toast.showProgress"
+      :size="toast.size"
+      :animation="toast.animation"
+      @close="handleToastClose('top-right', toast.id)"
+    />
+
+    <Toast
+      v-for="(toast, index) in toastQueues.bottomLeft"
+      :key="toast.id"
+      v-model:visible="toast.visible"
+      position="bottom-left"
+      :offset="getToastOffset('bottom-left', index)"
+      :variant="toast.variant"
+      :title="toast.title"
+      :message="toast.message"
+      :duration="toast.duration"
+      :clickToClose="toast.clickToClose"
+      :showProgress="toast.showProgress"
+      :size="toast.size"
+      :animation="toast.animation"
+      @close="handleToastClose('bottom-left', toast.id)"
+    />
+
+    <Toast
+      v-for="(toast, index) in toastQueues.bottomRight"
+      :key="toast.id"
+      v-model:visible="toast.visible"
+      position="bottom-right"
+      :offset="getToastOffset('bottom-right', index)"
+      :variant="toast.variant"
+      :title="toast.title"
+      :message="toast.message"
+      :duration="toast.duration"
+      :clickToClose="toast.clickToClose"
+      :showProgress="toast.showProgress"
+      :size="toast.size"
+      :animation="toast.animation"
+      @close="handleToastClose('bottom-right', toast.id)"
+    />
   </div>
 </template>
 
@@ -1940,9 +2385,13 @@ import Modal from './components/Modal.vue';
 import Alert from './components/Alert.vue';
 import Dropdown from './components/Dropdown.vue';
 import Drawer from './components/Drawer.vue';
+import Popover from './components/Popover.vue';
+import Leaderboard from './components/Leaderboard.vue';
+import Toast from './components/Toast.vue';
+
 import CodeModal from './components/SystemComponents/CodeModal.vue';
 import ParameterModal from './components/SystemComponents/ParameterModal.vue';
-import { Component, Plus, Code2, Wrench, Globe, HeartHandshake, Image, Info, MousePointer, Download, Save, Trash2, Settings, Heart, Share2, Type, Search, Lock, Zap, AlertTriangle, Menu, PanelRightOpen, ChevronRight } from 'lucide-vue-next';
+import { Component, Plus, Code2, Wrench, Globe, HeartHandshake, Image, Info, MousePointer, Download, Save, Trash2, Settings, Heart, Share2, Type, Search, Lock, Zap, AlertTriangle, Menu, PanelRightOpen, ChevronRight, MessageSquare, User, Grid3x3, Bell } from 'lucide-vue-next';
 
 // Demo state for SliderTab
 const activeTab = ref(0);
@@ -1969,6 +2418,53 @@ const carouselAutoplay = ref(true);
 const carouselAutoplayStart = ref(true);
 const carouselPauseOnHover = ref(true);
 const carouselInterval = ref(4000);
+
+// Demo state for Leaderboard
+const leaderboardItems = ref([
+  { 
+    id: 1, 
+    name: '张三', 
+    subtitle: '资深开发者', 
+    score: 15680, 
+    change: 5, 
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face',
+    online: true 
+  },
+  { 
+    id: 2, 
+    name: '李四', 
+    subtitle: '产品经理', 
+    score: 14250, 
+    change: -2, 
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face',
+    online: false 
+  },
+  { 
+    id: 3, 
+    name: '王五', 
+    subtitle: 'UI设计师', 
+    score: 13890, 
+    change: 3, 
+    avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop&crop=face',
+    online: true 
+  },
+  { 
+    id: 4, 
+    name: '赵六', 
+    subtitle: '前端工程师', 
+    score: 12450, 
+    change: 1, 
+    online: false 
+  },
+  { 
+    id: 5, 
+    name: '钱七', 
+    subtitle: '测试工程师', 
+    score: 11230, 
+    change: -1, 
+    online: true 
+  }
+]);
 
 // Checkbox状态
 const checkboxStates = ref({
@@ -2054,6 +2550,16 @@ const drawerStates = ref({
 const currentDrawerPlacement = ref('right');
 const currentDrawerSize = ref('md');
 
+// Toast队列管理 - 简化版
+const toastQueues = ref({
+  topLeft: [],
+  topRight: [],
+  bottomLeft: [],
+  bottomRight: []
+});
+
+let toastIdCounter = 0;
+
 // Dropdown数据
 const basicDropdownItems = ref([
   { label: 'New file', value: 'new' },
@@ -2069,12 +2575,12 @@ const actionDropdownItems = ref([
     value: 'profile',
     icon: '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" fill="none"/>'
   },
-  { 
-    label: 'Settings', 
-    value: 'settings',
-    icon: '<circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 1v6m0 6v6m11-5h-6m-6 0H1m16.5-4a4.5 4.5 0 0 1-9 0 4.5 4.5 0 0 1 9 0Z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
-    shortcut: '⌘,'
-  },
+      { 
+      label: 'Settings', 
+      value: 'settings',
+      icon: '<circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 1v6m0 6v6m11-5h-6m-6 0H1" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
+      shortcut: '⌘,'
+    },
   { 
     label: 'Help', 
     value: 'help',
@@ -2168,6 +2674,17 @@ const modalCodeTabs = ref([]);
 const isParameterModalVisible = ref(false);
 const parameterModalTitle = ref('');
 const parameterModalData = ref([]);
+
+// Leaderboard事件处理函数
+const handleLeaderboardRefresh = () => {
+  console.log('刷新排行榜数据');
+  // 这里可以添加刷新逻辑
+};
+
+const handleViewProfile = (item) => {
+  console.log('查看用户资料:', item.name);
+  // 这里可以添加查看资料的逻辑
+};
 
 // Code for the Modal
 const sliderTabUsageCode = `<template>
@@ -4261,7 +4778,455 @@ const goToPage = (page) => {
 };
 <\/script>`;
 
+// Popover code examples
+const popoverUsageCode = `<template>
+  <div class="p-6 space-y-8">
+    <!-- 基础用法 -->
+    <div>
+      <h4 class="text-sm font-medium text-slate-700 mb-3">基础用法</h4>
+      <div class="flex flex-wrap gap-3">
+        <Popover 
+          title="Popover Content"
+          content="This is the popover content"
+          trigger-text="Open Popover"
+        />
+        <Popover 
+          content="Simple popover without title"
+          trigger-text="No Title"
+        />
+      </div>
+    </div>
+
+    <!-- 不同触发方式 -->
+    <div>
+      <h4 class="text-sm font-medium text-slate-700 mb-3">触发方式</h4>
+      <div class="flex flex-wrap gap-3">
+        <Popover 
+          title="Click Trigger"
+          content="Click the button to show/hide"
+          trigger="click"
+          trigger-text="Click"
+        />
+        <Popover 
+          title="Hover Trigger"
+          content="Hover the button to show"
+          trigger="hover"
+          trigger-text="Hover"
+        />
+        
+      </div>
+    </div>
+
+    <!-- 不同位置 -->
+    <div>
+      <h4 class="text-sm font-medium text-slate-700 mb-3">弹出位置</h4>
+      <div class="grid grid-cols-3 gap-4 place-items-center">
+        <Popover placement="top-start" content="Top Start" trigger-text="↖" />
+        <Popover placement="top" content="Top Center" trigger-text="↑" />
+        <Popover placement="top-end" content="Top End" trigger-text="↗" />
+        
+        <Popover placement="left" content="Left Center" trigger-text="←" />
+        <div class="text-xs text-slate-500">Center</div>
+        <Popover placement="right" content="Right Center" trigger-text="→" />
+        
+        <Popover placement="bottom-start" content="Bottom Start" trigger-text="↙" />
+        <Popover placement="bottom" content="Bottom Center" trigger-text="↓" />
+        <Popover placement="bottom-end" content="Bottom End" trigger-text="↘" />
+      </div>
+    </div>
+
+    <!-- 不同样式变体 -->
+    <div>
+      <h4 class="text-sm font-medium text-slate-700 mb-3">样式变体</h4>
+      <div class="flex flex-wrap gap-3">
+        <Popover 
+          title="Default Style"
+          content="Default popover style"
+          variant="default"
+          trigger-text="Default"
+        />
+        <Popover 
+          title="Dark Style"
+          content="Dark theme popover"
+          variant="dark"
+          trigger-text="Dark"
+        />
+        <Popover 
+          title="Primary Style"
+          content="Primary color popover"
+          variant="primary"
+          trigger-text="Primary"
+        />
+        <Popover 
+          title="Light Style"
+          content="Light theme with shadow"
+          variant="light"
+          trigger-text="Light"
+        />
+      </div>
+    </div>
+
+    <!-- 功能选项 -->
+    <div>
+      <h4 class="text-sm font-medium text-slate-700 mb-3">功能选项</h4>
+      <div class="flex flex-wrap gap-3">
+        <Popover 
+          title="Closable Popover"
+          content="This popover has a close button"
+          :closable="true"
+          trigger-text="Closable"
+        />
+        <Popover 
+          title="No Arrow"
+          content="Popover without arrow"
+          :show-arrow="false"
+          trigger-text="No Arrow"
+        />
+        <Popover 
+          title="Custom Width"
+          content="This popover has a custom width setting"
+          :width="300"
+          trigger-text="Custom Width"
+        />
+      </div>
+    </div>
+
+    <!-- 自定义内容 -->
+    <div>
+      <h4 class="text-sm font-medium text-slate-700 mb-3">自定义内容</h4>
+      <Popover trigger-text="Rich Content">
+        <template #title>
+          <div class="flex items-center space-x-2">
+            <User :size="16" />
+            <span>User Profile</span>
+          </div>
+        </template>
+        <template #content>
+          <div class="space-y-3">
+            <div class="flex items-center space-x-3">
+              <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-medium">
+                JD
+              </div>
+              <div>
+                <div class="font-medium text-sm">John Doe</div>
+                <div class="text-xs text-slate-500">Software Engineer</div>
+              </div>
+            </div>
+            <div class="flex space-x-2">
+              <button class="px-2 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600 transition-colors">
+                View Profile
+              </button>
+              <button class="px-2 py-1 bg-slate-100 text-slate-700 text-xs rounded hover:bg-slate-200 transition-colors">
+                Message
+              </button>
+            </div>
+          </div>
+        </template>
+      </Popover>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { User } from 'lucide-vue-next';
+import Popover from './components/Popover.vue';
+<\/script>`;
+
+const popoverSourceCode = `<template>
+  <div class="popover-wrapper relative inline-block">
+    <!-- 触发元素 -->
+    <div 
+      ref="triggerRef"
+      :class="triggerClass"
+      @click="handleClick"
+      @mouseenter="handleMouseEnter"
+      @mouseleave="handleMouseLeave"
+    >
+      <slot name="trigger">
+        <button :class="defaultTriggerClass">
+          {{ triggerText }}
+        </button>
+      </slot>
+    </div>
+
+    <!-- 弹出框 -->
+    <Teleport to="body">
+      <Transition :name="transitionName">
+        <div
+          v-if="isVisible"
+          ref="popoverRef"
+          :class="popoverClass"
+          :style="popoverStyle"
+        >
+          <!-- 箭头 -->
+          <div 
+            v-if="showArrow"
+            :class="arrowClass"
+            :style="arrowStyle"
+          ></div>
+
+          <!-- 内容区域 -->
+          <div :class="contentClass">
+            <!-- 标题 -->
+            <div v-if="title || $slots.title" :class="titleClass">
+              <slot name="title">{{ title }}</slot>
+            </div>
+
+            <!-- 内容 -->
+            <div :class="bodyClass">
+              <slot name="content">{{ content }}</slot>
+            </div>
+
+            <!-- 关闭按钮 -->
+            <button
+              v-if="closable"
+              @click="hide"
+              :class="closeButtonClass"
+            >
+              <X :size="14" />
+            </button>
+          </div>
+        </div>
+      </Transition>
+    </Teleport>
+  </div>
+</template>
+
+<script setup>
+import { computed, ref, nextTick, onMounted, onUnmounted } from 'vue';
+import { X } from 'lucide-vue-next';
+
+const props = defineProps({
+  title: { type: String, default: '' },
+  content: { type: String, default: '' },
+  triggerText: { type: String, default: 'Open Popover' },
+     trigger: { type: String, default: 'click' }, // click, hover, manual
+  placement: { type: String, default: 'top' }, // top, bottom, left, right + -start/-end
+  variant: { type: String, default: 'default' }, // default, dark, light, primary
+  size: { type: String, default: 'md' }, // sm, md, lg
+  disabled: { type: Boolean, default: false },
+  closable: { type: Boolean, default: false },
+  showArrow: { type: Boolean, default: true },
+  showDelay: { type: Number, default: 0 },
+  hideDelay: { type: Number, default: 100 },
+  offset: { type: Number, default: 8 },
+  width: { type: [String, Number], default: 'auto' },
+  maxWidth: { type: [String, Number], default: 320 },
+});
+
+const emit = defineEmits(['show', 'hide', 'toggle']);
+
+const isVisible = ref(false);
+const triggerRef = ref(null);
+const popoverRef = ref(null);
+const popoverPosition = ref({ top: 0, left: 0 });
+
+// 计算样式...
+const popoverClass = computed(() => {
+  const baseClasses = [
+    'absolute z-50 rounded-lg shadow-lg border',
+    'transform transition-all duration-200 ease-out',
+  ];
+
+  switch (props.variant) {
+    case 'dark':
+      baseClasses.push('bg-slate-900 text-white border-slate-700');
+      break;
+    case 'primary':
+      baseClasses.push('bg-blue-600 text-white border-blue-500');
+      break;
+    default:
+      baseClasses.push('bg-white text-slate-900 border-slate-200');
+  }
+
+  return baseClasses;
+});
+
+// 定位计算...
+const calculatePosition = () => {
+  // 计算弹出框位置的逻辑
+};
+
+// 事件处理...
+const show = () => {
+  if (props.disabled) return;
+  isVisible.value = true;
+  emit('show');
+};
+
+const hide = () => {
+  isVisible.value = false;
+  emit('hide');
+};
+
+const handleClick = () => {
+  if (props.trigger === 'click') {
+    isVisible.value ? hide() : show();
+    emit('toggle', isVisible.value);
+  }
+};
+
+// 生命周期...
+onMounted(() => {
+  // 初始化事件监听
+});
+
+onUnmounted(() => {
+  // 清理事件监听
+});
+<\/script>`;
+
 // Modal code examples
+// Leaderboard code examples
+const leaderboardUsageCode = `<template>
+  <div class="p-6 space-y-8">
+    <!-- 基础排行榜 -->
+    <div>
+      <h4 class="text-sm font-medium text-slate-700 mb-3">基础排行榜</h4>
+      <Leaderboard 
+        title="用户积分排行"
+        :items="leaderboardItems"
+        scoreUnit="积分"
+        :showRefresh="true"
+        @refresh="handleRefresh"
+      />
+    </div>
+
+    <!-- 不同样式 -->
+    <div>
+      <h4 class="text-sm font-medium text-slate-700 mb-3">不同样式</h4>
+      <div class="space-y-4">
+        <div>
+          <span class="text-xs text-slate-500 mb-2 block">紧凑样式:</span>
+          <Leaderboard 
+            :items="leaderboardItems.slice(0, 3)"
+            variant="compact"
+            size="sm"
+          />
+        </div>
+        <div>
+          <span class="text-xs text-slate-500 mb-2 block">卡片样式:</span>
+          <Leaderboard 
+            :items="leaderboardItems.slice(0, 3)"
+            variant="card"
+            :showOnlineStatus="true"
+            :showActions="true"
+            @viewProfile="handleViewProfile"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import Leaderboard from './components/Leaderboard.vue';
+
+const leaderboardItems = ref([
+  { 
+    id: 1, 
+    name: '张三', 
+    subtitle: '资深开发者', 
+    score: 15680, 
+    change: 5, 
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face',
+    online: true 
+  },
+  { 
+    id: 2, 
+    name: '李四', 
+    subtitle: '产品经理', 
+    score: 14250, 
+    change: -2, 
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face',
+    online: false 
+  },
+  { 
+    id: 3, 
+    name: '王五', 
+    subtitle: 'UI设计师', 
+    score: 13890, 
+    change: 3, 
+    avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop&crop=face',
+    online: true 
+  },
+]);
+
+const handleRefresh = () => {
+  console.log('刷新排行榜数据');
+};
+
+const handleViewProfile = (item) => {
+  console.log('查看用户资料:', item.name);
+};
+<\/script>`;
+
+const leaderboardSourceCode = `// Leaderboard组件源码较长，这里展示核心部分
+<template>
+  <div :class="leaderboardClass">
+    <div v-if="title" class="flex items-center justify-between mb-6">
+      <h3 class="text-lg font-bold text-gray-900">{{ title }}</h3>
+      <div v-if="showRefresh" class="flex items-center space-x-2">
+        <button @click="handleRefresh" class="refresh-button">
+          <!-- 刷新图标 -->
+        </button>
+      </div>
+    </div>
+
+    <div class="space-y-3">
+      <div 
+        v-for="(item, index) in displayItems" 
+        :key="item.id || index"
+        :class="itemClass(index)"
+        :style="animationStyle(index)"
+      >
+        <!-- 排名 -->
+        <div :class="rankClass(index)">
+          <!-- 前三名显示星星图标，其他显示数字 -->
+        </div>
+
+        <!-- 用户头像 -->
+        <div :class="avatarContainerClass">
+          <img v-if="item.avatar" :src="item.avatar" :alt="item.name" :class="avatarClass" />
+          <div v-else :class="defaultAvatarClass">
+            {{ getInitials(item.name) }}
+          </div>
+          <!-- 在线状态指示器 -->
+          <div v-if="showOnlineStatus && item.online" class="online-indicator"></div>
+        </div>
+
+        <!-- 用户信息 -->
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center justify-between">
+            <div class="min-w-0 flex-1">
+              <h4 :class="nameClass">{{ item.name }}</h4>
+              <p v-if="item.subtitle" class="text-xs text-gray-500 truncate">{{ item.subtitle }}</p>
+            </div>
+            <div class="text-right ml-3">
+              <div :class="scoreClass">
+                {{ formatScore(item.score) }}
+                <span v-if="scoreUnit" class="text-xs text-gray-500 ml-1">{{ scoreUnit }}</span>
+              </div>
+              <!-- 排名变化指示器 -->
+              <div v-if="item.change" :class="changeClass(item.change)">
+                <!-- 上升/下降箭头和数值 -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 操作按钮 -->
+        <div v-if="showActions" class="ml-3 flex space-x-1">
+          <button @click="handleViewProfile(item)" class="action-button">
+            <!-- 查看资料图标 -->
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>`;
+
 const modalUsageCode = `<template>
   <div>
     <!-- 触发按钮 -->
@@ -4671,6 +5636,42 @@ const openPaginationModal = () => {
       title: '组件源码',
       language: 'xml',
       code: paginationSourceCode,
+    }
+  ];
+  isModalVisible.value = true;
+};
+
+
+
+const openPopoverModal = () => {
+  modalTitle.value = 'Popover 组件';
+  modalCodeTabs.value = [
+    {
+      title: '用法示例',
+      language: 'xml',
+      code: popoverUsageCode,
+    },
+    {
+      title: '组件源码',
+      language: 'xml',
+      code: popoverSourceCode,
+    }
+  ];
+  isModalVisible.value = true;
+};
+
+const openLeaderboardModal = () => {
+  modalTitle.value = 'Leaderboard 组件';
+  modalCodeTabs.value = [
+    {
+      title: '用法示例',
+      language: 'xml',
+      code: leaderboardUsageCode,
+    },
+    {
+      title: '组件源码',
+      language: 'xml',
+      code: leaderboardSourceCode,
     }
   ];
   isModalVisible.value = true;
@@ -5277,6 +6278,112 @@ const openDropdownModal = () => {
   isModalVisible.value = true;
 };
 
+// Toast code examples
+const toastUsageCode = `Toast组件用法示例，请查看项目中的展示区域`;
+
+const toastSourceCode = `Toast组件源码较长，请查看项目中的 src/components/Toast.vue 文件`;
+
+const openToastModal = () => {
+  modalTitle.value = 'Toast 组件';
+  modalCodeTabs.value = [
+    {
+      title: '用法示例',
+      language: 'xml',
+      code: toastUsageCode,
+    },
+    {
+      title: '组件源码',
+      language: 'xml',
+      code: toastSourceCode,
+    }
+  ];
+  isModalVisible.value = true;
+};
+
+// kebab-case 转 camelCase 辅助函数
+const kebabToCamel = (str) => {
+  return str.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
+};
+
+// Toast事件处理函数 - 简化版
+const showToast = (position, variant, title, message, duration = 4000, clickToClose = false, showProgress = true) => {
+  const stateKey = kebabToCamel(position);
+  const toastId = ++toastIdCounter;
+
+  const newToast = {
+    id: toastId,
+    visible: true, // 直接设置为 true
+    variant,
+    title,
+    message,
+    duration,
+    clickToClose,
+    showProgress,
+    size: 'md',
+    animation: 'slide'
+  };
+
+  toastQueues.value[stateKey].push(newToast);
+};
+
+const showToastWithSize = (position, variant, title, message, size) => {
+  const stateKey = kebabToCamel(position);
+  const toastId = ++toastIdCounter;
+
+  const newToast = {
+    id: toastId,
+    visible: true,
+    variant,
+    title,
+    message,
+    duration: 4000,
+    clickToClose: false,
+    showProgress: true,
+    size,
+    animation: 'slide'
+  };
+
+  toastQueues.value[stateKey].push(newToast);
+};
+
+const showToastWithAnimation = (position, variant, title, message, animation) => {
+  const stateKey = kebabToCamel(position);
+  const toastId = ++toastIdCounter;
+
+  const newToast = {
+    id: toastId,
+    visible: true,
+    variant,
+    title,
+    message,
+    duration: 4000,
+    clickToClose: false,
+    showProgress: true,
+    size: 'md',
+    animation
+  };
+
+  toastQueues.value[stateKey].push(newToast);
+};
+
+const handleToastClose = (position, toastId) => {
+  const stateKey = kebabToCamel(position);
+  const queue = toastQueues.value[stateKey];
+  const index = queue.findIndex(toast => toast.id === toastId);
+  if (index !== -1) {
+    queue.splice(index, 1);
+  }
+};
+
+// 计算 Toast 偏移量
+const getToastOffset = (_, index) => {
+  const toastHeight = 80; // 估算每个 Toast 的高度
+  const gap = 12; // Toast 之间的间距
+  return index * (toastHeight + gap);
+};
+
+
+
 // Dropdown事件处理
 const handleDropdownSelect = (item) => {
   console.log('Dropdown选择:', item);
@@ -5284,7 +6391,7 @@ const handleDropdownSelect = (item) => {
 
 // Input OTP事件处理
 const handleOTPComplete = (type, value) => {
-  console.log(`${type} OTP 完成输入:`, value);
+  console.log(type + ' OTP 完成输入:', value);
 };
 
 // Modal演示方法
@@ -5484,6 +6591,39 @@ const openParameterModal = (component) => {
       ],
       slots: []
     };
+  } else if (component === 'Popover') {
+    parameterModalData.value = {
+      parameters: [
+        { name: 'title', type: 'String', default: "''", required: false, description: '弹出框标题' },
+        { name: 'content', type: 'String', default: "''", required: false, description: '弹出框内容' },
+        { name: 'triggerText', type: 'String', default: "'Open Popover'", required: false, description: '触发按钮的文字' },
+                 { name: 'trigger', type: 'String', default: "'click'", required: false, description: '触发方式：click, hover, manual' },
+        { name: 'placement', type: 'String', default: "'top'", required: false, description: '弹出位置：top, top-start, top-end, bottom, bottom-start, bottom-end, left, left-start, left-end, right, right-start, right-end' },
+        { name: 'variant', type: 'String', default: "'default'", required: false, description: '样式变体：default, dark, light, primary' },
+        { name: 'size', type: 'String', default: "'md'", required: false, description: '弹出框大小：sm, md, lg' },
+        { name: 'disabled', type: 'Boolean', default: 'false', required: false, description: '是否禁用弹出框' },
+        { name: 'closable', type: 'Boolean', default: 'false', required: false, description: '是否显示关闭按钮' },
+        { name: 'showArrow', type: 'Boolean', default: 'true', required: false, description: '是否显示指向箭头' },
+        { name: 'showOverlay', type: 'Boolean', default: 'false', required: false, description: '是否显示遮罩层' },
+        { name: 'showDelay', type: 'Number', default: '0', required: false, description: '显示延迟时间（毫秒）' },
+        { name: 'hideDelay', type: 'Number', default: '100', required: false, description: '隐藏延迟时间（毫秒）' },
+        { name: 'offset', type: 'Number', default: '8', required: false, description: '弹出框与触发元素的距离' },
+        { name: 'width', type: 'String | Number', default: "'auto'", required: false, description: '弹出框宽度' },
+        { name: 'maxWidth', type: 'String | Number', default: '320', required: false, description: '弹出框最大宽度' },
+        { name: 'visible', type: 'Boolean', default: 'undefined', required: false, description: '手动控制显示状态，支持 v-model:visible' },
+      ],
+      events: [
+        { name: 'update:visible', params: 'visible: Boolean', description: '当显示状态改变时触发' },
+        { name: 'show', params: '', description: '当弹出框显示时触发' },
+        { name: 'hide', params: '', description: '当弹出框隐藏时触发' },
+        { name: 'toggle', params: 'visible: Boolean', description: '当弹出框显示/隐藏切换时触发' },
+      ],
+      slots: [
+        { name: 'trigger', scope: '', description: '自定义触发元素' },
+        { name: 'title', scope: '', description: '自定义标题内容' },
+        { name: 'content', scope: '', description: '自定义弹出框内容' },
+      ]
+    };
   } else if (component === 'InputOTP') {
     parameterModalData.value = {
       parameters: [
@@ -5612,6 +6752,57 @@ const openParameterModal = (component) => {
         { name: 'footer', scope: '{ close }', description: '自定义底部操作区域，提供close方法' },
       ]
     };
+  } else if (component === 'Leaderboard') {
+    parameterModalData.value = {
+      parameters: [
+        { name: 'items', type: 'Array', default: '[]', required: true, description: '排行榜数据数组，每项包含name、score、avatar等字段' },
+        { name: 'title', type: 'String', default: "''", required: false, description: '排行榜标题' },
+        { name: 'scoreUnit', type: 'String', default: "''", required: false, description: '分数单位，如"积分"、"分"等' },
+        { name: 'variant', type: 'String', default: "'default'", required: false, description: '样式变体：default, compact, card' },
+        { name: 'size', type: 'String', default: "'md'", required: false, description: '组件大小：sm, md, lg' },
+        { name: 'showOnlineStatus', type: 'Boolean', default: 'false', required: false, description: '是否显示在线状态指示器' },
+        { name: 'showActions', type: 'Boolean', default: 'false', required: false, description: '是否显示操作按钮' },
+        { name: 'showRefresh', type: 'Boolean', default: 'false', required: false, description: '是否显示刷新按钮' },
+        { name: 'showLoadMore', type: 'Boolean', default: 'false', required: false, description: '是否显示加载更多按钮' },
+        { name: 'animated', type: 'Boolean', default: 'true', required: false, description: '是否启用动画效果' },
+        { name: 'pageSize', type: 'Number', default: '10', required: false, description: '每页显示的项目数量' },
+        { name: 'hasMore', type: 'Boolean', default: 'false', required: false, description: '是否还有更多数据' },
+        { name: 'loading', type: 'Boolean', default: 'false', required: false, description: '是否处于加载状态' },
+      ],
+      events: [
+        { name: 'refresh', params: '', description: '点击刷新按钮时触发' },
+        { name: 'loadMore', params: '', description: '点击加载更多时触发' },
+        { name: 'viewProfile', params: 'item: Object', description: '点击查看资料时触发' },
+      ],
+      slots: []
+    };
+  } else if (component === 'Toast') {
+    parameterModalData.value = {
+      parameters: [
+        { name: 'visible', type: 'Boolean', default: 'false', required: false, description: '通知的显示状态，支持 v-model' },
+        { name: 'title', type: 'String', default: "''", required: false, description: '通知标题' },
+        { name: 'message', type: 'String', default: "''", required: false, description: '通知消息内容' },
+        { name: 'variant', type: 'String', default: "'default'", required: false, description: '通知类型：default, success, warning, error, info' },
+        { name: 'position', type: 'String', default: "'top-right'", required: false, description: '显示位置：top-left, top-right, bottom-left, bottom-right' },
+        { name: 'size', type: 'String', default: "'md'", required: false, description: '通知大小：sm, md, lg' },
+        { name: 'duration', type: 'Number', default: '4000', required: false, description: '自动关闭时间（毫秒），0表示不自动关闭' },
+        { name: 'closable', type: 'Boolean', default: 'true', required: false, description: '是否显示关闭按钮' },
+        { name: 'clickToClose', type: 'Boolean', default: 'false', required: false, description: '是否可以点击通知关闭' },
+        { name: 'showProgress', type: 'Boolean', default: 'true', required: false, description: '是否显示进度条' },
+        { name: 'icon', type: 'Component', default: 'null', required: false, description: '自定义图标组件，默认根据variant自动选择' },
+        { name: 'showIcon', type: 'Boolean', default: 'true', required: false, description: '是否显示图标' },
+        { name: 'iconSize', type: 'Number', default: '20', required: false, description: '图标大小' },
+        { name: 'animation', type: 'String', default: "'slide'", required: false, description: '动画效果：slide, fade, bounce' },
+      ],
+      events: [
+        { name: 'update:visible', params: 'visible: Boolean', description: '当显示状态改变时触发' },
+        { name: 'close', params: '', description: '当通知关闭时触发' },
+        { name: 'click', params: '', description: '当点击通知时触发' },
+      ],
+      slots: [
+        { name: 'default', scope: '', description: '自定义通知内容，优先级高于message属性' },
+      ]
+    };
   }
   
   isParameterModalVisible.value = true;
@@ -5647,263 +6838,22 @@ const openFormDrawer = () => {
 };
 
 const openDrawerModal = () => {
-  modalTitle.value = 'Drawer 组件代码';
+  modalTitle.value = 'Drawer 组件';
   modalCodeTabs.value = [
     {
-      title: '使用方法',
-      code: `<template>
-  <!-- 基础抽屉 -->
-  <drawer v-model:visible="drawerVisible" title="抽屉标题" placement="right">
-    <p>这里是抽屉内容</p>
-  </drawer>
-  
-  <!-- 设置不同方向 -->
-  <drawer v-model:visible="leftDrawer" title="左侧抽屉" placement="left" />
-  <drawer v-model:visible="topDrawer" title="顶部抽屉" placement="top" />
-  <drawer v-model:visible="bottomDrawer" title="底部抽屉" placement="bottom" />
-  
-  <!-- 设置不同尺寸 -->
-  <drawer v-model:visible="smallDrawer" title="小抽屉" size="sm" />
-  <drawer v-model:visible="largeDrawer" title="大抽屉" size="lg" />
-  
-  <!-- 带footer的抽屉 -->
-  <drawer 
-    v-model:visible="formDrawer" 
-    title="表单抽屉" 
-    :show-footer="true"
-    :show-confirm-button="true"
-    confirm-text="保存"
-    @confirm="handleSave"
-  >
-    <form>
-      <input placeholder="请输入内容" />
-    </form>
-  </drawer>
-  
-  <!-- 自定义内容抽屉 -->
-  <drawer v-model:visible="customDrawer" title="自定义抽屉">
-    <template #title>
-      <div class="flex items-center space-x-2">
-        <settings-icon />
-        <span>设置中心</span>
-      </div>
-    </template>
-    
-    <div class="space-y-4">
-      <div>设置项 1</div>
-      <div>设置项 2</div>
-    </div>
-    
-    <template #footer="{ close }">
-      <div class="flex justify-between">
-        <button @click="resetSettings">重置</button>
-        <div class="space-x-2">
-          <button @click="close">取消</button>
-          <button @click="saveSettings">保存</button>
-        </div>
-      </div>
-    </template>
-  </drawer>
-</template>
-
-<script setup>
-import { ref } from 'vue';
-import Drawer from './components/Drawer.vue';
-
-const drawerVisible = ref(false);
-const leftDrawer = ref(false);
-const topDrawer = ref(false);
-const bottomDrawer = ref(false);
-const smallDrawer = ref(false);
-const largeDrawer = ref(false);
-const formDrawer = ref(false);
-const customDrawer = ref(false);
-
-const handleSave = () => {
-  console.log('保存数据');
-  formDrawer.value = false;
-};
-
-const resetSettings = () => {
-  console.log('重置设置');
-};
-
-const saveSettings = () => {
-  console.log('保存设置');
-  customDrawer.value = false;
-};
-<\/script>`
+      title: '用法示例',
+      language: 'xml',
+      code: 'Drawer组件的用法示例，请查看项目中的展示区域',
     },
     {
       title: '组件源码',
-      code: `<template>
-  <Teleport to="body">
-    <Transition
-      name="drawer-overlay"
-      enter-active-class="duration-300"
-      enter-from-class="opacity-0"
-      enter-to-class="opacity-100"
-      leave-active-class="duration-200"
-      leave-from-class="opacity-100"
-      leave-to-class="opacity-0"
-    >
-      <div
-        v-if="visible"
-        class="fixed inset-0 z-50 flex"
-        @click="handleBackdropClick"
-      >
-        <!-- 背景遮罩 -->
-        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
-        
-        <!-- 抽屉内容 -->
-        <Transition
-          name="drawer-content"
-          :enter-active-class="enterActiveClass"
-          :enter-from-class="enterFromClass"
-          :enter-to-class="enterToClass"
-          :leave-active-class="leaveActiveClass"
-          :leave-from-class="leaveFromClass"
-          :leave-to-class="leaveToClass"
-        >
-          <div
-            v-if="visible"
-            :class="drawerClass"
-            @click.stop
-          >
-            <!-- Header -->
-            <div v-if="showHeader" :class="headerClass">
-              <h3 class="text-lg font-semibold text-slate-900">
-                <slot name="title">{{ title }}</slot>
-              </h3>
-              <button
-                v-if="closable"
-                @click="handleClose"
-                class="text-slate-400 hover:text-slate-600 transition-colors p-1 rounded-md hover:bg-slate-100"
-              >
-                <X :size="20" />
-              </button>
-            </div>
-            
-            <!-- Body -->
-            <div :class="bodyClass">
-              <slot>
-                <p class="text-slate-600">{{ content }}</p>
-              </slot>
-            </div>
-            
-            <!-- Footer -->
-            <div v-if="showFooter" :class="footerClass">
-              <slot name="footer" :close="handleClose">
-                <div class="flex justify-end space-x-3">
-                  <button
-                    v-if="showCancelButton"
-                    @click="handleClose"
-                    class="px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors"
-                  >
-                    {{ cancelText }}
-                  </button>
-                  <button
-                    v-if="showConfirmButton"
-                    @click="handleConfirm"
-                    :class="confirmButtonClass"
-                  >
-                    {{ confirmText }}
-                  </button>
-                </div>
-              </slot>
-            </div>
-          </div>
-        </Transition>
-      </div>
-    </Transition>
-  </Teleport>
-</template>
-
-<script setup>
-import { computed, watch, nextTick, onUnmounted } from 'vue';
-import { X } from 'lucide-vue-next';
-
-const props = defineProps({
-  // 基础属性
-  visible: { type: Boolean, default: false },
-  title: { type: String, default: 'Drawer Title' },
-  content: { type: String, default: '' },
-  
-  // 抽屉位置和尺寸
-  placement: { type: String, default: 'right' }, // left, right, top, bottom
-  size: { type: String, default: 'md' }, // sm, md, lg, xl, full
-  
-  // 显示控制
-  showHeader: { type: Boolean, default: true },
-  showFooter: { type: Boolean, default: false },
-  closable: { type: Boolean, default: true },
-  
-  // 按钮
-  showCancelButton: { type: Boolean, default: true },
-  showConfirmButton: { type: Boolean, default: false },
-  cancelText: { type: String, default: 'Close' },
-  confirmText: { type: String, default: 'Confirm' },
-  confirmVariant: { type: String, default: 'primary' },
-  
-  // 行为
-  closeOnBackdrop: { type: Boolean, default: true },
-  closeOnEsc: { type: Boolean, default: true },
-});
-
-const emit = defineEmits(['update:visible', 'close', 'confirm']);
-
-// 抽屉主体样式
-const drawerClass = computed(() => {
-  const baseClasses = [
-    'relative bg-white shadow-2xl overflow-hidden flex flex-col',
-  ];
-
-  // 位置和圆角
-  switch (props.placement) {
-    case 'left':
-      baseClasses.push('h-full rounded-r-xl');
-      break;
-    case 'right':
-      baseClasses.push('h-full rounded-l-xl ml-auto');
-      break;
-    case 'top':
-      baseClasses.push('w-full rounded-b-xl');
-      break;
-    case 'bottom':
-      baseClasses.push('w-full rounded-t-xl mt-auto');
-      break;
-  }
-
-  // 尺寸
-  if (props.placement === 'left' || props.placement === 'right') {
-    // 左右抽屉的宽度
-    switch (props.size) {
-      case 'sm': baseClasses.push('w-80'); break;
-      case 'md': baseClasses.push('w-96'); break;
-      case 'lg': baseClasses.push('w-[32rem]'); break;
-      case 'xl': baseClasses.push('w-[40rem]'); break;
-      case 'full': baseClasses.push('w-full'); break;
-    }
-  } else {
-    // 上下抽屉的高度
-    switch (props.size) {
-      case 'sm': baseClasses.push('h-80'); break;
-      case 'md': baseClasses.push('h-96'); break;
-      case 'lg': baseClasses.push('h-[32rem]'); break;
-      case 'xl': baseClasses.push('h-[40rem]'); break;
-      case 'full': baseClasses.push('h-full'); break;
-    }
-  }
-
-  return baseClasses;
-});
-
-// 省略更多代码...
-<\/script>`
+      language: 'xml',
+      code: 'Drawer组件源码较长，请查看项目中的 src/components/Drawer.vue 文件',
     }
   ];
   isModalVisible.value = true;
 };
+
 </script>
 
 <style>

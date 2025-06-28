@@ -352,7 +352,7 @@ const arrowButtonClass = computed(() => (isNext) => {
                     (!isNext && props.currentPage === 1);
   
   if (isDisabled) {
-    baseClasses.push('bg-slate-100 text-slate-400 cursor-not-allowed border border-slate-200');
+    baseClasses.push('bg-slate-100 text-slate-400 cursor-not-allowed');
   } else {
     if (props.compact) {
       // 紧凑模式下箭头按钮透明背景
@@ -585,6 +585,15 @@ watch([() => props.variant, () => props.size, () => props.compact, () => props.r
   border-color: #cbd5e1 !important;
 }
 
+/* 圆形按钮样式 - 确保在非紧凑模式下按钮也是圆形 */
+.pagination-container[data-rounded="true"]:not([data-compact="true"]) .pagination-btn {
+  border-radius: 9999px !important;
+}
+
+.pagination-container[data-rounded="false"]:not([data-compact="true"]) .pagination-btn {
+  border-radius: 6px !important;
+}
+
 
 
 /* 变体样式 */
@@ -657,6 +666,32 @@ watch([() => props.variant, () => props.size, () => props.compact, () => props.r
 .rounded-full > *:last-child {
   border-top-right-radius: 9999px !important;
   border-bottom-right-radius: 9999px !important;
+}
+
+.pagination-container[data-compact="true"] .pagination-btn {
+  outline: none;
+}
+
+/* 箭头按钮的圆形样式 - 确保在圆形模式下箭头按钮也是圆形 */
+.pagination-container[data-rounded="true"] + button,
+.pagination-container[data-rounded="true"] ~ button {
+  border-radius: 9999px !important;
+}
+
+/* 为了确保所有按钮在圆形模式下都是圆形，包括箭头按钮 */
+.rounded-full .pagination-btn,
+.rounded-full button {
+  border-radius: 9999px !important;
+}
+
+/* 省略号的圆形样式 */
+.pagination-container[data-rounded="true"]:not([data-compact="true"]) span {
+  border-radius: 9999px !important;
+}
+
+/* 确保所有 UnoCSS 的 rounded-full 类都能正确生效 */
+.rounded-full {
+  border-radius: 9999px !important;
 }
 </style>
 
